@@ -106,7 +106,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 24px;
-    margin-top: 20px;
+    margin: 20px 0;
 }
 
 .container-links a{
@@ -127,6 +127,7 @@
 .container-links a:hover{
     scale: 1.02;
     background-color: #c7ecee;
+    
 }
 
 
@@ -160,4 +161,10 @@ picture img{
 .text-invalid{
     margin-top: 10px;
     color: red;
+}
+
+.text-link{
+    display: block;
+    text-align: center;
+    color: #ccc;
 }

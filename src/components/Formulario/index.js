@@ -144,11 +144,23 @@ const Formulario = ({submitForm}) => {
                         }
 
                         <br />
-                        <p>Segue esses links abaixo nos quais irá lhe fornecer informaçoes sobre seu estado atual e como melhorar 👇</p> <br />
+                        <p>Segue esses links abaixo nos quais irá lhe fornecer informações sobre seu estado atual e como melhorar 👇</p> <br />
                         <div className='container-links'>
                             <a href='https://www.tuasaude.com/imc/#google_vignette'>O que é IMC?</a>
-                            <a href='#'>Dicas para melhorar meu IMC aaaaaaaaaaaa</a>
+
+                            {stageIMC() == "baixo" &&
+                                <a href='https://www.ecycle.com.br/como-engordar/'>Dicas para ganhar peso</a>
+                            }
+                            {stageIMC() == 'normal' && 
+                                <a href='https://vidasaudavel.einstein.br/alimentacao-equilibrada/'>Dicas de alimentação saudável</a>
+                            }
+
+                            {stageIMC() == 'alto' &&
+                                <a href='https://www.metropoles.com/saude/nutrologa-dicas-para-emagrecer-em-30-dias'>Dicas de emagrecimento</a>
+                            }
                         </div>
+
+                        <a className='text-link' href='#tabela-imc'>Veja a tabela completa IMC</a>
                     </article>
                 </main>
             }

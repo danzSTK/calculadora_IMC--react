@@ -147,6 +147,17 @@
     text-shadow: 0px 0px 5px  #aaaa;
 }
 
+picture{
+    width: 100%;
+}
 picture img{
-    max-width: 100%;
+    width: 100%;
+    max-width: 70%;
+    display: block;
+    margin: 0 auto;
+}
+
+.text-invalid{
+    margin-top: 10px;
+    color: red;
 }

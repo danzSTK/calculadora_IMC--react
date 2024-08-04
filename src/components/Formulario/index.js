@@ -12,7 +12,7 @@ const Formulario = ({submitForm}) => {
     const [campoAlturaInvalido, setCampoAlturaInvalido] = useState(false)
     const [campoPesoInvalido, setCampoPesoInvalido] = useState(false)
     const [submitDesabilitado, setSubmitDesabilitado] = useState(true)
-    const [renderizaFormulario, setRenderizaFormulario] = useState(false)
+    const [renderizaFormulario, setRenderizaFormulario] = useState(true)
 
     const validaNumber = /^[0-9.]*$/;
 
@@ -74,8 +74,23 @@ const Formulario = ({submitForm}) => {
         console.log(renderizaFormulario)
     }
 
-    console.log(altura)
-    console.log(peso)
+    const valorIMC = () =>{
+        return peso / (altura * 2)
+    }
+
+    const stageIMC = () => {
+        if(valorIMC() <= 18.4){
+            return 'baixo'
+        } 
+        if(valorIMC() >= 18.5 && valorIMC() <= 24.9){
+            return 'normal'
+        } 
+        if(valorIMC() >= 25){
+            return 'alto'
+        }
+    }
+
+    console.log(stageIMC())
 
     return(
         <section className='formulario' onSubmit={exibeResultado}>
@@ -93,14 +108,14 @@ const Formulario = ({submitForm}) => {
                             </li>
                             <li>
                                 <label>Altura</label>
-                                <input id='altura' type='number' placeholder='Digite sua altura'  required onKeyUp={({target}) => validaCampo(target.value, 'altura')} />
-                                {campoAlturaInvalido && <p>Campo Invalido</p>}
+                                <input id='altura' type='text' placeholder='Digite sua altura'  required onKeyUp={({target}) => validaCampo(target.value, 'altura')} />
+                                {campoAlturaInvalido && <p className='text-invalid'>Campo Invalido: digite somente números Ex: <strong>1.90</strong></p>}
                             </li>
                             <li>
                                 <label>Peso</label>
-                                <input id='peso' type='number' placeholder='Digite sua altura' required min={1} max={500} onKeyUp={({target}) => validaCampo(target.value, 'peso')} />
+                                <input id='peso' type='text' placeholder='Digite sua altura' required min={1} max={500} onKeyUp={({target}) => validaCampo(target.value, 'peso')} />
 
-                                {campoPesoInvalido && <p>Campo Invalido</p>}
+                                {campoPesoInvalido && <p className='text-invalid'>Campo Invalido: digite somente números Ex: <strong>1.90</strong></p>}
                                 
                             </li>
                             <button id='submit' disabled={submitDesabilitado} type='submit'>Calcular</button>
@@ -117,10 +132,21 @@ const Formulario = ({submitForm}) => {
                         <picture>
                             <img src={doctorIcone} alt="" />
                         </picture>
-                        <p>O seu <strong>IMC</strong> atual é de <strong>18</strong> e você está abaixo do seu peso ideal. </p> <br />
+
+                        {stageIMC() == 'baixo' && 
+                        <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está abaixo do seu peso ideal. </p>
+                        }
+                        {stageIMC() == 'normal' && 
+                            <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está indo muito bem!</p>
+                        }
+                        {stageIMC() == 'alto' &&
+                            <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está acima do peso e deve tomar cuidado com sua alimentação </p>
+                        }
+
+                        <br />
                         <p>Segue esses links abaixo nos quais irá lhe fornecer informaçoes sobre seu estado atual e como melhorar 👇</p> <br />
                         <div className='container-links'>
-                            <a href='#'>Como posso ganhar peso? </a>
+                            <a href='https://www.tuasaude.com/imc/#google_vignette'>O que é IMC?</a>
                             <a href='#'>Dicas para melhorar meu IMC aaaaaaaaaaaa</a>
                         </div>
                     </article>

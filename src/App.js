@@ -1,11 +1,13 @@
 import React, { Component, useState } from "react";
 import Formulario from "./components/Formulario";
-
+import Tabela from "./components/Tabela";
 
 
 function App(){
 
-  const [rendizaFormulario, setRenderizaFormulario] = useState(true)
+  const [rendizaFormulario, setRenderizaFormulario] = useState(false)
+
+  console.log(rendizaFormulario)
 
   const submitFormulario = () => {
     setRenderizaFormulario(valorAtual => !valorAtual);
@@ -13,8 +15,11 @@ function App(){
   return(
     <div className="container">
       <Formulario submitForm={submitFormulario} />
-      <p>estado atua {rendizaFormulario ? "rendizei o formulario" : "nao renderizei o formulario"}</p>
-
+      
+      {rendizaFormulario && 
+        <Tabela />
+      }
+    
     </div>
 
   )

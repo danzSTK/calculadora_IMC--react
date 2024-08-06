@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import style from './Formulario.modules.css'
+import Style from './formulario.modules.css';
 import doctorIcone from './img/Medicine-bro.png' 
 
 let valorCalculo;
@@ -13,7 +13,7 @@ const Formulario = ({submitForm}) => {
     const [campoPesoInvalido, setCampoPesoInvalido] = useState(false)
     const [submitDesabilitado, setSubmitDesabilitado] = useState(true)
     const [renderizaFormulario, setRenderizaFormulario] = useState(true)
-
+    const [loading, setLoading] = useState(false) 
     const validaNumber = /^[0-9.]*$/;
 
     function validaCampo(value, id){
@@ -71,7 +71,11 @@ const Formulario = ({submitForm}) => {
     const exibeResultado = (e) =>  {
         e.preventDefault()
         setRenderizaFormulario(valorAtual => !valorAtual)
-        console.log(renderizaFormulario)
+        setLoading(true)
+        setTimeout(() => {
+            setLoading(false)
+            submitForm()
+        },1500);
     }
 
     const valorIMC = () =>{
@@ -118,51 +122,60 @@ const Formulario = ({submitForm}) => {
                                 {campoPesoInvalido && <p className='text-invalid'>Campo Invalido: digite somente números Ex: <strong>1.90</strong></p>}
                                 
                             </li>
-                            <button id='submit' disabled={submitDesabilitado} type='submit'>Calcular</button>
+                            <button id='submit'disabled={submitDesabilitado} type='submit'>Calcular</button>
                         </ul>
                     </div> 
                 </form>
             }
 
             {!renderizaFormulario && 
-            
-                <main className='form'>
-                    <button onClick={exibeResultado} className='btn-back' type='button'>{"<"} Back</button>
-                    <article className='resultado'>
-                        <picture>
-                            <img src={doctorIcone} alt="" />
-                        </picture>
 
-                        {stageIMC() == 'baixo' && 
-                        <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está abaixo do seu peso ideal. </p>
-                        }
-                        {stageIMC() == 'normal' && 
-                            <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está indo muito bem!</p>
-                        }
-                        {stageIMC() == 'alto' &&
-                            <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está acima do peso e deve tomar cuidado com sua alimentação </p>
-                        }
+                <>
+                    {loading && 
+                        <div className='loading'></div>
+                    }
+                    
+                    {!loading && 
+                        <main className='form main'>
+                            <button onClick={exibeResultado} className='btn-back' type='button'>{"<"} Back</button>
+                            <article className='resultado'>
+                                <picture>
+                                    <img src={doctorIcone} alt="" />
+                                </picture>
 
-                        <br />
-                        <p>Segue esses links abaixo nos quais irá lhe fornecer informações sobre seu estado atual e como melhorar 👇</p> <br />
-                        <div className='container-links'>
-                            <a href='https://www.tuasaude.com/imc/#google_vignette'>O que é IMC?</a>
+                                {stageIMC() == 'baixo' && 
+                                <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está abaixo do seu peso ideal. </p>
+                                }
+                                {stageIMC() == 'normal' && 
+                                    <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está indo muito bem!</p>
+                                }
+                                {stageIMC() == 'alto' &&
+                                    <p>O seu <strong>IMC</strong> atual é de <strong>{valorIMC().toFixed(2)}</strong> e você está acima do peso e deve tomar cuidado com sua alimentação </p>
+                                }
 
-                            {stageIMC() == "baixo" &&
-                                <a href='https://www.ecycle.com.br/como-engordar/'>Dicas para ganhar peso</a>
-                            }
-                            {stageIMC() == 'normal' && 
-                                <a href='https://vidasaudavel.einstein.br/alimentacao-equilibrada/'>Dicas de alimentação saudável</a>
-                            }
+                                <br />
+                                <p>Segue esses links abaixo nos quais irá lhe fornecer informações sobre seu estado atual e como melhorar 👇</p> <br />
+                                <div className='container-links'>
+                                    <a href='https://www.tuasaude.com/imc/#google_vignette'>O que é IMC?</a>
 
-                            {stageIMC() == 'alto' &&
-                                <a href='https://www.metropoles.com/saude/nutrologa-dicas-para-emagrecer-em-30-dias'>Dicas de emagrecimento</a>
-                            }
-                        </div>
+                                    {stageIMC() == "baixo" &&
+                                        <a href='https://www.ecycle.com.br/como-engordar/'>Dicas para ganhar peso</a>
+                                    }
+                                    {stageIMC() == 'normal' && 
+                                        <a href='https://vidasaudavel.einstein.br/alimentacao-equilibrada/'>Dicas de alimentação saudável</a>
+                                    }
 
-                        <a className='text-link' href='#tabela-imc'>Veja a tabela completa IMC</a>
-                    </article>
-                </main>
+                                    {stageIMC() == 'alto' &&
+                                        <a href='https://www.metropoles.com/saude/nutrologa-dicas-para-emagrecer-em-30-dias'>Dicas de emagrecimento</a>
+                                    }
+                                </div>
+
+                                <a className='text-link' href='#tabela-imc'>Veja a tabela completa IMC</a>
+                            </article>
+                        </main>
+                    }
+                
+                </>
             }
         </section>
     )

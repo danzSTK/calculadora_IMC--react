@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Style from './formulario.modules.css';
+import Style from './Formulario.modules.css';
 import doctorIcone from './img/Medicine-bro.png' 
 
 let valorCalculo;

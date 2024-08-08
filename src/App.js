@@ -7,8 +7,6 @@ function App(){
 
   const [rendizaFormulario, setRenderizaFormulario] = useState(false)
 
-  console.log(rendizaFormulario)
-
   const submitFormulario = () => {
     setRenderizaFormulario(valorAtual => !valorAtual);
   }
@@ -19,7 +17,6 @@ function App(){
       {rendizaFormulario && 
         <Tabela />
       }
-    
     </div>
 
   )

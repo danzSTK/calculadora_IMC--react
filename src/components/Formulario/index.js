@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import Style from './Formulario.modules.css';
 import doctorIcone from './img/Medicine-bro.png' 
 
-let valorCalculo;
-
 const Formulario = ({submitForm}) => {
 
     const [nomeUsuario, setNomeUsuario] = useState('')
@@ -94,7 +92,6 @@ const Formulario = ({submitForm}) => {
         }
     }
 
-    console.log(stageIMC())
 
     return(
         <section className='formulario' onSubmit={exibeResultado}>
